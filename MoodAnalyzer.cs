@@ -1,4 +1,7 @@
-﻿namespace MoodAnalyserCore
+﻿using MoodAnalyser;
+using System.Linq.Expressions;
+
+namespace MoodAnalyserCore
 {
     public class MoodAnalyzer
     {
@@ -22,14 +25,19 @@
                 {
                     return "SAD";
                 }
+                else if(this.message==" ")
+                {
+                    
+                   throw new CustomException(CustomException.ExceptionType.EmptyException, "Empty String");
+                }
                 else
                 {
                     return "HAPPY";
                 }
             }
-            catch
+            catch(Exception) 
             {
-                return "HAPPY";
+                throw new CustomException(CustomException.ExceptionType.NullException,"Null String");
             }
             
         }

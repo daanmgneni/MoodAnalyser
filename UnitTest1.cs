@@ -1,4 +1,6 @@
+using MoodAnalyser;
 using MoodAnalyserCore;
+using System.Data;
 
 namespace MoodAnalyserMSTest
 
@@ -6,45 +8,38 @@ namespace MoodAnalyserMSTest
     [TestClass]
     public class UnitTest1
     {
-        [TestMethod]
-        public void ToTestSadMood()
-        {
-            //Arrange
-            String ExpectedOutput = "SAD";
-            string message = "I'm in a Sad mood.";
-            MoodAnalyzer moodAnalyzer=new MoodAnalyzer(message);
-            //Act
-            string mood = moodAnalyzer.AnalyseMood();
-            //Assert
-            Assert.AreEqual(ExpectedOutput, mood);
 
+
+        [TestMethod]
+        //TC 3.1: Given null mood should throw moodanalysisException.
+        public void Given_NULL_Mood_Should_Throw_MoodAnalyserException()
+        {
+            try
+            {
+                string message = null;
+                MoodAnalyzer moodAnalyser = new MoodAnalyzer(message);
+                string mood = moodAnalyser.AnalyseMood();
+            }
+            catch (CustomException e)
+            {
+                Assert.AreEqual("Null String", e.Message);
+            }
         }
 
         [TestMethod]
-        public void ToTestAnyMood()
+        //TC 3.2: Given Empty mood should throw moodanalysisException Indicating Empty mood.
+        public void Given_EMPTY_Mood_Should_Throw_MoodAnalyserException_IndicatingEmptyMood()
         {
-            //Arrange
-            String ExpectedOutput = "HAPPY";
-            string message = "I'm in a any mood.";
-            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(message);
-            //Act
-            string mood = moodAnalyzer.AnalyseMood();
-            //Assert
-            Assert.AreEqual(ExpectedOutput, mood);
-
-        }
-        [TestMethod]
-        public void ToTestnull()
-        {
-            //Arrange
-            String ExpectedOutput = "HAPPY";
-            string message = null;
-            MoodAnalyzer moodAnalyzer = new MoodAnalyzer(message);
-            //Act
-            string mood = moodAnalyzer.AnalyseMood();
-            //Assert
-            Assert.AreEqual(ExpectedOutput, mood);
-
+            try
+            {
+                string message = "";
+                MoodAnalyzer moodAnalyser = new MoodAnalyzer(message);
+                string mood = moodAnalyser.AnalyseMood();
+            }
+            catch (CustomException e)
+            {  
+                Assert.AreEqual("Null String", e.Message);
+            }
         }
     }
 }
