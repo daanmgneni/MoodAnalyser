@@ -9,7 +9,7 @@ namespace MoodAnalyser
     public class CustomException:Exception
     {
         public enum ExceptionType
-        { NullException,EmptyException }
+        { NullException,EmptyException,NoSuchClass,NoSuchMethod }
          public ExceptionType type;
         public CustomException(ExceptionType Type,string message ):base(message)
         {

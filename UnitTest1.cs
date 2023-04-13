@@ -5,41 +5,46 @@ using System.Data;
 namespace MoodAnalyserMSTest
 
 {
+
     [TestClass]
     public class UnitTest1
     {
-
-
+        // TC 4.1 : Given MoodAnalyse class name should return MoodAnalyser object.
         [TestMethod]
-        //TC 3.1: Given null mood should throw moodanalysisException.
-        public void Given_NULL_Mood_Should_Throw_MoodAnalyserException()
+        public void GivenMoodAnalyseClassName_ShouldReturnMoodAnalyserObject()
         {
+            object expected = new MoodAnalyzer(null);
+            object obj = MoodAnalyserReflection.CreateMoodAnalyse("AnalyserProgram.MoodAnalyser", "MoodAnalyser");
+            Assert.AreEqual(expected.GetType(), obj.GetType());
+        }
+
+        //TC 4.2 : Given Improper class name should throw MoodAnaliserException.
+        [TestMethod]
+        public void GivenImproperClassName_ShouldThrowMoodAnalyserException()
+        {
+            string excepted = "Class not found";
             try
             {
-                string message = null;
-                MoodAnalyzer moodAnalyser = new MoodAnalyzer(message);
-                string mood = moodAnalyser.AnalyseMood();
+                object moodAnalyserObject = MoodAnalyserReflection.CreateMoodAnalyse("MoodAnalyzerApp.DemoClass", "MoodAnalyser");
             }
-            catch (CustomException e)
+            catch (CustomException exception)
             {
-                Assert.AreEqual("Null String", e.Message);
+                Assert.AreEqual(excepted, exception.Message);
             }
         }
 
+        //TC 4.3 : Given improper constructor should throw MoodAnalyserException.
         [TestMethod]
-        //TC 3.2: Given Empty mood should throw moodanalysisException Indicating Empty mood.
-        public void Given_EMPTY_Mood_Should_Throw_MoodAnalyserException_IndicatingEmptyMood()
+        public void GivenImproperConstructor_ShouldThrowMoodAnalyserException()
         {
+            string excepted = "Constructor is not found";
             try
             {
-                string message = "";
-                MoodAnalyzer moodAnalyser = new MoodAnalyzer(message);
-                string mood = moodAnalyser.AnalyseMood();
+                object moodAnalyserObject = MoodAnalyserReflection.CreateMoodAnalyse("MoodAnalyzerApp.MoodAnalyser", "InvalidConstructor");
             }
-            catch (CustomException e)
-            {  
-                Assert.AreEqual("Null String", e.Message);
+            catch (CustomException exception)
+            {
+                Assert.AreEqual(excepted, exception.Message);
             }
         }
     }
-}
